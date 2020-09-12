@@ -40,6 +40,10 @@ with open("raw_groups.txt", "w") as group_file:
     for result in result_groups:
         print(result.groups, file=group_file)
 
+# Sort the groups so that order will not matter, reducing hash values
+for result in result_groups:
+    result.sort_groups()
+
 with open("totals.txt", "w") as totals_file:
     totals = Counter()
     for result in result_groups:
