@@ -1,3 +1,4 @@
+from collections import Counter
 from teams import pool1, pool2, pool3, pool4
 from result import Result
 from itertools import permutations
@@ -29,5 +30,20 @@ for p1 in permutations1:
             for p4 in permutations4:
                 result_groups.append(Result(p1, p2, p3, p4))
 
-for result in result_groups:
-    print(result)
+with open("output.txt", "w") as out_file:
+    print(f"Storing {len(result_groups)} groups into {out_file.name}")
+    for result in result_groups:
+        print(result, file=out_file)
+
+with open("raw_groups.txt", "w") as group_file:
+    print(f"Storing {len(result_groups)} groups into {group_file.name}")
+    for result in result_groups:
+        print(result.groups, file=group_file)
+
+with open("totals.txt", "w") as totals_file:
+    totals = Counter()
+    for result in result_groups:
+        totals[str(result.groups)] += 1
+    print(f"Storing {len(totals)} hashes into {totals_file.name}")
+    for key in totals:
+        print(f"{key} - {totals[key]}", file=totals_file)
