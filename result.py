@@ -1,4 +1,5 @@
 from itertools import permutations
+from teams import pool1
 
 
 class SameRegionError(Exception):
@@ -277,6 +278,18 @@ class Result:
             return True
         # If we get here, we did not find a valid permutation
         raise FutureRegionError(f"There is no way to fit {remain_teams} in {remain_groups}")
+
+    def sort_groups(self):
+        """
+        Sorts the list of Groups to be in Pool 1 order
+        :return: None
+        """
+        temp_groups = []
+        for i in range(len(self.groups)):
+            for group in self.groups:
+                if group.teams[0] == pool1[i]:
+                    temp_groups.append(group)
+        self.groups = temp_groups
 
     def __repr__(self):
         return f"{'invalid' if self.invalid else ''}{self.groups} - draws: ({self.perm1}, {self.perm2}, {self.perm3}, {self.perm4})"
